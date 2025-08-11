@@ -112,6 +112,24 @@ logs/
 .DS_Store
 Thumbs.db
 ```
+# Reproducibility
+
+**Versioned code & env**
+- Results in the dissertation were produced with repo tag **v1.0** (commit `<fill-commit-hash>`).
+- Dependencies are pinned in `requirements.txt`; CUDA/Torch/PyG details are captured in `env_report.txt`.
+
+**Data paths**
+- Download datasets to `data/`:
+  - `data/juliet/`, `data/devign/`, `data/bigvul/`
+- In each notebook, set the `DATA_DIR` cell to your local path (defaults assume `./data`).
+
+**Deterministic settings**
+- Notebooks set a fixed seed (`42`) for `numpy`, `random`, and `torch`.
+- For full determinism on GPU, set:
+  ```bash
+  export PYTHONHASHSEED=0
+  export CUBLAS_WORKSPACE_CONFIG=:16:8
+
 # CITATION.cff
 
 cff-version: 1.2.0
