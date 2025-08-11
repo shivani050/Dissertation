@@ -1,35 +1,48 @@
-# AI Methods for Detecting Vulnerabilities in Software Systems
-> Sequence (CNN) and Graph (GCN/GraphSAGE) models for source-code vulnerability detection on Juliet, Devign, and Big-Vul.
+# Datasets
+| Dataset       | What                                                  | Link                                                                                                           |
+| ------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Juliet / SARD | Synthetic CWE cases (balanced)                        | [https://samate.nist.gov/SARD/](https://samate.nist.gov/SARD/)                                                 |
+| Devign        | Real C/C++ functions with binary vulnerability labels | [https://github.com/epicosy/devign](https://github.com/epicosy/devign)                                         |
+| Big-Vul       | Real CVE-linked commits                               | [https://www.kaggle.com/datasets/kaggler10240/msr-data](https://www.kaggle.com/datasets/kaggler10240/msr-data) |
 
-[![Python](https://img.shields.io/badge/python-3.10+-informational)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)]()
-[![Reproducibility](https://img.shields.io/badge/reproducible-yes-success)]()
+This repo does not redistribute datasets; please download from the sources above.
 
-This repo contains the code, notebooks, and artifacts for my MSc dissertation.  
-It includes preprocessing, training, evaluation, and figures (PR/ROC, confusion matrices, and summary tables).
+# Models
+Sequence CNN (token input): embedding → 1D conv kernels {3,5,7} → global max-pool → dense → sigmoid.
 
-**Author:** Shivani Saudagar Sawant
+Graph GCN/GraphSAGE (graph input): AST/CFG/DFG nodes with learned embeddings → 3× GraphSAGE → global pool → dense.
 
----
+# Reproduce results (typical order)
+1) Preprocessing (Preprocessing.ipynb)
+- Tokenization, padding/truncation for sequence models
+- Graph construction (AST/CFG/DFG via Joern), pruning > 500 nodes
+- Stratified splits; leakage checks
 
-## 🔧 Quick start
+2) Train sequence model (Trainmodel Updated.ipynb)
+- Set batch size / LR / epochs in the notebook header
+- Outputs: metrics, PR/ROC, confusion matrix
 
-```bash
-# 1) Clone
-git clone https://github.com/shivani050/Dissertation.git
-cd Dissertation
+3) Train graph model (GCN-GNN.ipynb)
+- Node-budget batching; gradient accumulation if needed
+- Outputs: metrics, PR/ROC, confusion matrix
 
-# 2) (Optional) create a venv
-python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
+4) Evaluate + plots
+- Figures saved to results/ (F1/Precision/Recall bars, PR curves)
+- Optional: average CNN + GCN probabilities to form a simple ensemble.
 
-# 3) Install deps
-pip install -r requirements.txt
+# Results 
+| Model           | Dataset    |       Acc |      Prec |       Rec |        F1 |
+| --------------- | ---------- | --------: | --------: | --------: | --------: |
+| Baseline DNN    | Juliet     |     95.1% |     88.0% |     55.0% |     68.0% |
+| CNN             | Juliet     |     94.0% |     81.0% |     72.0% |     76.0% |
+| Hybrid CNN+Feat | Juliet     |     94.5% |     83.0% |     74.0% |     78.0% |
+| GCN             | Juliet     |     93.0% |     90.0% |     60.0% |     72.0% |
+| Baseline DNN    | Devign     |     90.0% |     60.0% |     20.0% |     30.0% |
+| CNN             | Devign     |     91.2% |     70.0% |     45.0% |     55.0% |
+| Hybrid CNN+Feat | Devign     |     91.0% |     69.0% |     47.0% |     56.0% |
+| **GCN**         | **Devign** | **92.0%** | **68.0%** | **57.0%** | **62.0%** |
 
-# 4) (If PyTorch Geometric wheels are needed)
-# See https://pytorch-geometric.readthedocs.io/en/latest/install/installation.html
+Accuracy is dominated by the majority (safe) class; F1/PR give a truer picture.
 
-# 5) Run notebooks non-interactively (saves executed copies in outputs/)
-python -m pip install jupyter nbconvert
-jupyter nbconvert --to notebook --execute "Preprocessing.ipynb"       --output "outputs/Preprocessing.run.ipynb"
-jupyter nbconvert --to notebook --execute "Trainmodel Updated.ipynb"  --output "outputs/Train_CNN.run.ipynb"
-jupyter nbconvert --to notebook --execute "GCN-GNN.ipynb"             --output "outputs/Train_GCN.run.ipynb"
+# Acknowledgements
+Joern for code graph extraction; PyTorch + PyTorch Geometric for GNNs; Weights & Biases for experiment tracking.
