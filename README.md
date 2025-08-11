@@ -15,8 +15,8 @@ Shivani Saudagar Sawant
 
 ```bash
 # 1) Clone
-git clone https://github.com/USERNAME/REPO.git
-cd REPO
+git clone https://github.com/shivani050/Dissertation.git
+cd Dissertation
 
 # 2) (Optional) create a venv
 python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
@@ -32,8 +32,10 @@ python -m pip install jupyter nbconvert
 jupyter nbconvert --to notebook --execute "Preprocessing.ipynb"       --output "outputs/Preprocessing.run.ipynb"
 jupyter nbconvert --to notebook --execute "Trainmodel Updated.ipynb"  --output "outputs/Train_CNN.run.ipynb"
 jupyter nbconvert --to notebook --execute "GCN-GNN.ipynb"             --output "outputs/Train_GCN.run.ipynb"
+'''
 
-#Datasets:
+
+Datasets:
 
 | Dataset       | What                                                  | Link                                                                                                           |
 | ------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
