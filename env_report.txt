@@ -1,0 +1,36 @@
+Generated: 2025-08-10T21:49:25.190500Z
+Python: 3.11.13
+Platform: Linux-6.1.123+-x86_64-with-glibc2.35
+PyTorch: 2.6.0+cu124
+Torch CUDA build: 12.4
+CUDA available: True
+GPU: NVIDIA L4
+cuDNN: 90100
+torch-geometric: 2.6.0
+torch-scatter: 2.1.2+pt26cu124
+torch-sparse: 0.6.18+pt26cu124
+torch-cluster: 1.6.3+pt26cu124
+torch-spline-conv: 1.2.2+pt26cu124
+Joern: not found
+
+nvidia-smi:
+Sun Aug 10 21:49:32 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.54.15              Driver Version: 550.54.15      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA L4                      Off |   00000000:00:03.0 Off |                    0 |
+| N/A   49C    P8             17W /   72W |       3MiB /  23034MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
